@@ -3,14 +3,14 @@ class Ya0201ctl < Formula
   homepage "https://github.com/ya0201/ya0201ctl"
 
   if OS.mac?
-    url "https://github.com/ya0201/ya0201ctl/releases/download/v0.0.8/ya0201ctl-macos.tar.gz"
-    sha256 "72f6d4d2b4403c23526834a4d1da1710c30baf2e4d9ceac9deb309eda8d805bb"
+    url "https://github.com/ya0201/ya0201ctl/releases/download/v0.0.9/ya0201ctl-macos.tar.gz"
+    sha256 "e59fb1e139753742743a3abae3ab244d5800e26dcaf554bfce9f8ec007cad99b"
   elsif OS.linux?
-    url "https://github.com/ya0201/ya0201ctl/releases/download/v0.0.8/ya0201ctl-linux.tar.gz"
-    sha256 "15babc80ff15b73b4eaf920539b25db3c2da9ab807c4c93359fc5e2aaf59717c"
+    url "https://github.com/ya0201/ya0201ctl/releases/download/v0.0.9/ya0201ctl-linux.tar.gz"
+    sha256 "ade56452a90bb9c9dcf931b41be4fd877eaa15e611907b0f002628530af27761"
   end
 
-  version "v0.0.8"
+  version "v0.0.9"
 
   def install
     bin.install "ya0201ctl"
