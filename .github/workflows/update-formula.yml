@@ -1,0 +1,64 @@
+name: Update Formula
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: true
+        type: string
+      macos_url:
+        required: true
+        type: string
+      linux_url:
+        required: true
+        type: string
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download macOS and calculate SHA
+        run: |
+          curl -L "${{ github.event.inputs.macos_url }}" -o macos.tar.gz
+          shasum -a 256 macos.tar.gz | cut -d ' ' -f 1 > macos.sha
+
+      - name: Download Linux and calculate SHA
+        run: |
+          curl -L "${{ github.event.inputs.linux_url }}" -o linux.tar.gz
+          shasum -a 256 linux.tar.gz | cut -d ' ' -f 1 > linux.sha
+
+      - name: Generate Formula
+        run: |
+          sha_macos=$(cat macos.sha)
+          sha_linux=$(cat linux.sha)
+          version="${{ github.event.inputs.tag }}"
+          cat <<EOF > Formula/ya0201ctl.rb
+          class Ya0201ctl < Formula
+            desc "My Awesome CLI Toolchain"
+            homepage "https://github.com/ya0201/ya0201ctl"
+
+            if OS.mac?
+              url "${{ github.event.inputs.macos_url }}"
+              sha256 "$sha_macos"
+            elsif OS.linux?
+              url "${{ github.event.inputs.linux_url }}"
+              sha256 "$sha_linux"
+            end
+
+            version "$version"
+
+            def install
+              bin.install "ya0201ctl"
+            end
+          end
+          EOF
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add Formula/ya0201ctl.rb
+          git commit -m "Update formula to ${{ github.event.inputs.tag }}"
+          git push
