@@ -1,4 +1,4 @@
-name: Update Formula
+name: Update ya0201ctl Formula
 
 on:
   workflow_dispatch:
@@ -61,5 +61,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add Formula/ya0201ctl.rb
-          git commit -m "Update formula to ${{ github.event.inputs.tag }}"
+          git commit -m "Update ya0201ctl formula to ${{ github.event.inputs.tag }}"
           git push
