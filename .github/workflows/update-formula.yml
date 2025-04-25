@@ -34,6 +34,7 @@ jobs:
           sha_macos=$(cat macos.sha)
           sha_linux=$(cat linux.sha)
           version="${{ github.event.inputs.tag }}"
+          mkdir -p Formula
           cat <<EOF > Formula/ya0201ctl.rb
           class Ya0201ctl < Formula
             desc "My Awesome CLI Toolchain"
